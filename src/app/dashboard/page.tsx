@@ -31,7 +31,6 @@ import {
 } from '@/components/ui/pagination';
 import { AlertCircle, Loader2 } from 'lucide-react';
 import DashboardSidebar from '@/components/DashboardSidebar';
-import { SidebarProvider } from '@/components/ui/sidebar';
 
 interface Post {
   id: number;
@@ -135,7 +134,7 @@ const Dashboard = () => {
               placeholder='Search...'
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className='max-w-xs'
+              className='max-w-xs font-serif'
             />
             <Select
               value={filterType}
@@ -144,9 +143,13 @@ const Dashboard = () => {
               <SelectTrigger className='w-32'>
                 <SelectValue placeholder='Filter by' />
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value='title'>Title</SelectItem>
-                <SelectItem value='id'>ID</SelectItem>
+              <SelectContent className='bg-[#706666]'>
+                <SelectItem value='title' className='font-serif'>
+                  Title
+                </SelectItem>
+                <SelectItem value='id' className='font-serif'>
+                  ID
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -161,27 +164,34 @@ const Dashboard = () => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className='w-16'>ID</TableHead>
-                <TableHead>Title</TableHead>
-                <TableHead className='hidden md:table-cell'>Content</TableHead>
-                <TableHead className='w-16'>User ID</TableHead>
+                <TableHead className='w-16 font-serif'>No.</TableHead>
+                <TableHead className='font-serif'>Title</TableHead>
+                <TableHead className='hidden md:table-cell font-serif'>
+                  Content
+                </TableHead>
+                <TableHead className='w-16 font-serif'>User ID</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {currentPosts.length > 0 ? (
                 currentPosts.map((post) => (
                   <TableRow key={post.id}>
-                    <TableCell>{post.id}</TableCell>
-                    <TableCell className='font-medium'>{post.title}</TableCell>
-                    <TableCell className='hidden max-w-xs truncate md:table-cell'>
+                    <TableCell className='font-serif'>{post.id}</TableCell>
+                    <TableCell className='font-medium font-serif'>
+                      {post.title}
+                    </TableCell>
+                    <TableCell className='hidden max-w-xs truncate md:table-cell font-serif'>
                       {post.body}
                     </TableCell>
-                    <TableCell>{post.userId}</TableCell>
+                    <TableCell className='font-serif'>{post.userId}</TableCell>
                   </TableRow>
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={4} className='h-24 text-center'>
+                  <TableCell
+                    colSpan={4}
+                    className='h-24 text-center font-serif'
+                  >
                     No results found.
                   </TableCell>
                 </TableRow>
@@ -196,7 +206,6 @@ const Dashboard = () => {
               <PaginationItem>
                 <PaginationPrevious
                   onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
-                  // disabled={currentPage === 1}
                 />
               </PaginationItem>
 
@@ -206,6 +215,7 @@ const Dashboard = () => {
                     <PaginationLink
                       onClick={() => handlePageChange(page)}
                       isActive={page === currentPage}
+                      className='cursor-pointer'
                     >
                       {page}
                     </PaginationLink>
@@ -218,7 +228,6 @@ const Dashboard = () => {
                   onClick={() =>
                     handlePageChange(Math.min(totalPages, currentPage + 1))
                   }
-                  // disabled={currentPage === totalPages}
                 />
               </PaginationItem>
             </PaginationContent>

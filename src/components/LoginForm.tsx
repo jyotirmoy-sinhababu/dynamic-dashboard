@@ -7,7 +7,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -20,7 +19,6 @@ import { AlertCircle } from 'lucide-react';
 
 import { useForm } from 'react-hook-form';
 import { Separator } from '@/components/ui/separator';
-import Link from 'next/link';
 
 const signupSchema = yup.object({
   email: yup
@@ -76,7 +74,10 @@ const LoginForm = () => {
   };
 
   return (
-    <div className='flex justify-center items-center sm:mx-[27%] sm:mt-[9%] mx-[5%] mt-[27%] '>
+    <div className='flex flex-col justify-center items-center sm:mx-[27%] sm:mt-[9%] mx-[5%] mt-[27%] '>
+      <div className='mb-3.5'>
+        <p className='font-serif text-4xl'>Login Form</p>
+      </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
           {signupError && (
@@ -112,7 +113,7 @@ const LoginForm = () => {
                 <FormLabel>Password</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder='••••••'
+                    placeholder='password'
                     type='password'
                     disabled={isLoading}
                     {...field}
@@ -123,13 +124,17 @@ const LoginForm = () => {
             )}
           />
 
-          <Button type='submit' className='w-full' disabled={isLoading}>
+          <Button
+            type='submit'
+            className='w-full font-serif bg-[#e0dbdb] hover:bg-[#8f8e8e] hover:text-white cursor-pointer'
+            disabled={isLoading}
+          >
             {isLoading ? 'Creating account...' : 'Create account'}
           </Button>
 
           <Separator className='my-4' />
 
-          <div className='text-center text-sm font-volkhorn'>
+          <div className='text-center  font-serif text-2xl'>
             A Next.js dashboard with form validation using Yup and
             react-hook-form.
           </div>
