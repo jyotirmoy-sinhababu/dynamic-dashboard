@@ -34,14 +34,16 @@ const DashboardSidebar = ({ loginToken }: any) => {
           <h2 className='text-lg font-bold font-serif'>App Dashboard</h2>
         </div>
         <div className='flex flex-col '>
-          {navItems.map((item, index) => (
-            <div key={index} className='mx-1'>
-              <Button className='mt-5 w-full  hover:bg-[#635f5f]  hover:text-white cursor-pointer'>
-                <item.icon className='h-4 w-4' />
-                <span>{item.title}</span>
-              </Button>
-            </div>
-          ))}
+          {navItems.map((item, index) => {
+            return (
+              <div key={index} className='mx-1'>
+                <Button className='mt-5 w-full  hover:bg-[#635f5f]  hover:text-white cursor-pointer'>
+                  <item.icon className='h-4 w-4' />
+                  <span>{item.title}</span>
+                </Button>
+              </div>
+            );
+          })}
         </div>
       </div>
       {loginToken ? (
