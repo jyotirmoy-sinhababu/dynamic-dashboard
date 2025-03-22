@@ -30,6 +30,8 @@ import {
   PaginationPrevious,
 } from '@/components/ui/pagination';
 import { AlertCircle, Loader2 } from 'lucide-react';
+import DashboardSidebar from '@/components/DashboardSidebar';
+import { SidebarProvider } from '@/components/ui/sidebar';
 
 interface Post {
   id: number;
@@ -39,6 +41,7 @@ interface Post {
 }
 
 const Dashboard = () => {
+  const [loginToken, setLoginToken] = useState<any>();
   const [posts, setPosts] = useState<Post[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -53,6 +56,7 @@ const Dashboard = () => {
     const checkAuth = () => {
       const token = localStorage.getItem('auth_token');
       token ? router.push('/dashboard') : router.push('/login');
+      setLoginToken(token);
     };
     checkAuth();
     fetchPosts();
@@ -122,100 +126,105 @@ const Dashboard = () => {
   }
 
   return (
-    <div className='space-y-4 sm:mx-[17%] mx-[3%] sm:mt-[11%] mt-[3%]'>
-      <div className='flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between'>
-        <div className='flex flex-1 items-center gap-2'>
-          <Input
-            placeholder='Search...'
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className='max-w-xs'
-          />
-          <Select
-            value={filterType}
-            onValueChange={(value) => setFilterType(value as 'title' | 'id')}
-          >
-            <SelectTrigger className='w-32'>
-              <SelectValue placeholder='Filter by' />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value='title'>Title</SelectItem>
-              <SelectItem value='id'>ID</SelectItem>
-            </SelectContent>
-          </Select>
+    <div className='flex'>
+      <DashboardSidebar loginToken={loginToken} />
+      <div className='space-y-4 sm:mx-[5%] mx-[3%] sm:mt-[11%] mt-[3%]'>
+        <div className='flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between'>
+          <div className='flex flex-1 items-center gap-2'>
+            <Input
+              placeholder='Search...'
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className='max-w-xs'
+            />
+            <Select
+              value={filterType}
+              onValueChange={(value) => setFilterType(value as 'title' | 'id')}
+            >
+              <SelectTrigger className='w-32'>
+                <SelectValue placeholder='Filter by' />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value='title'>Title</SelectItem>
+                <SelectItem value='id'>ID</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          <div className='text-sm text-muted-foreground'>
+            Showing {indexOfFirstPost + 1}-
+            {Math.min(indexOfLastPost, filteredPosts.length)} of{' '}
+            {filteredPosts.length} posts
+          </div>
         </div>
-        <div className='text-sm text-muted-foreground'>
-          Showing {indexOfFirstPost + 1}-
-          {Math.min(indexOfLastPost, filteredPosts.length)} of{' '}
-          {filteredPosts.length} posts
-        </div>
-      </div>
 
-      <div className='rounded-md border'>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className='w-16'>ID</TableHead>
-              <TableHead>Title</TableHead>
-              <TableHead className='hidden md:table-cell'>Content</TableHead>
-              <TableHead className='w-16'>User ID</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {currentPosts.length > 0 ? (
-              currentPosts.map((post) => (
-                <TableRow key={post.id}>
-                  <TableCell>{post.id}</TableCell>
-                  <TableCell className='font-medium'>{post.title}</TableCell>
-                  <TableCell className='hidden max-w-xs truncate md:table-cell'>
-                    {post.body}
-                  </TableCell>
-                  <TableCell>{post.userId}</TableCell>
-                </TableRow>
-              ))
-            ) : (
+        <div className='rounded-md border'>
+          <Table>
+            <TableHeader>
               <TableRow>
-                <TableCell colSpan={4} className='h-24 text-center'>
-                  No results found.
-                </TableCell>
+                <TableHead className='w-16'>ID</TableHead>
+                <TableHead>Title</TableHead>
+                <TableHead className='hidden md:table-cell'>Content</TableHead>
+                <TableHead className='w-16'>User ID</TableHead>
               </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
+            </TableHeader>
+            <TableBody>
+              {currentPosts.length > 0 ? (
+                currentPosts.map((post) => (
+                  <TableRow key={post.id}>
+                    <TableCell>{post.id}</TableCell>
+                    <TableCell className='font-medium'>{post.title}</TableCell>
+                    <TableCell className='hidden max-w-xs truncate md:table-cell'>
+                      {post.body}
+                    </TableCell>
+                    <TableCell>{post.userId}</TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={4} className='h-24 text-center'>
+                    No results found.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
 
-      {totalPages > 1 && (
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious
-                onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
-                disabled={currentPage === 1}
-              />
-            </PaginationItem>
-
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-              <PaginationItem key={page}>
-                <PaginationLink
-                  onClick={() => handlePageChange(page)}
-                  isActive={page === currentPage}
-                >
-                  {page}
-                </PaginationLink>
+        {totalPages > 1 && (
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious
+                  onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
+                  // disabled={currentPage === 1}
+                />
               </PaginationItem>
-            ))}
 
-            <PaginationItem>
-              <PaginationNext
-                onClick={() =>
-                  handlePageChange(Math.min(totalPages, currentPage + 1))
-                }
-                disabled={currentPage === totalPages}
-              />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
-      )}
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                (page) => (
+                  <PaginationItem key={page}>
+                    <PaginationLink
+                      onClick={() => handlePageChange(page)}
+                      isActive={page === currentPage}
+                    >
+                      {page}
+                    </PaginationLink>
+                  </PaginationItem>
+                )
+              )}
+
+              <PaginationItem>
+                <PaginationNext
+                  onClick={() =>
+                    handlePageChange(Math.min(totalPages, currentPage + 1))
+                  }
+                  // disabled={currentPage === totalPages}
+                />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        )}
+      </div>
     </div>
   );
 };
