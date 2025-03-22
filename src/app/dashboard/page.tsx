@@ -174,18 +174,22 @@ const Dashboard = () => {
             </TableHeader>
             <TableBody>
               {currentPosts.length > 0 ? (
-                currentPosts.map((post) => (
-                  <TableRow key={post.id}>
-                    <TableCell className='font-serif'>{post.id}</TableCell>
-                    <TableCell className='font-medium font-serif'>
-                      {post.title}
-                    </TableCell>
-                    <TableCell className='hidden max-w-xs truncate md:table-cell font-serif'>
-                      {post.body}
-                    </TableCell>
-                    <TableCell className='font-serif'>{post.userId}</TableCell>
-                  </TableRow>
-                ))
+                currentPosts.map((post) => {
+                  return (
+                    <TableRow key={post.id}>
+                      <TableCell className='font-serif'>{post.id}</TableCell>
+                      <TableCell className='font-medium font-serif'>
+                        {post.title}
+                      </TableCell>
+                      <TableCell className='hidden max-w-xs truncate md:table-cell font-serif'>
+                        {post.body}
+                      </TableCell>
+                      <TableCell className='font-serif'>
+                        {post.userId}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
               ) : (
                 <TableRow>
                   <TableCell
@@ -210,17 +214,19 @@ const Dashboard = () => {
               </PaginationItem>
 
               {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                (page) => (
-                  <PaginationItem key={page}>
-                    <PaginationLink
-                      onClick={() => handlePageChange(page)}
-                      isActive={page === currentPage}
-                      className='cursor-pointer'
-                    >
-                      {page}
-                    </PaginationLink>
-                  </PaginationItem>
-                )
+                (page) => {
+                  return (
+                    <PaginationItem key={page}>
+                      <PaginationLink
+                        onClick={() => handlePageChange(page)}
+                        isActive={page === currentPage}
+                        className='cursor-pointer'
+                      >
+                        {page}
+                      </PaginationLink>
+                    </PaginationItem>
+                  );
+                }
               )}
 
               <PaginationItem>
