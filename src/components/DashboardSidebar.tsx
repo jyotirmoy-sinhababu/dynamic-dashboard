@@ -1,13 +1,9 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
-
 import { Button } from '@/components/ui/button';
 import { LayoutDashboard, Settings, User } from 'lucide-react';
 
 const DashboardSidebar = ({ loginToken }: any) => {
-  const pathname = usePathname();
-
   const navItems = [
     {
       title: 'Dashboard',
