@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { LayoutDashboard, Settings, User } from 'lucide-react';
 
@@ -8,6 +9,7 @@ interface DashboardSidebarProps {
 }
 
 const DashboardSidebar = ({ loginToken }: DashboardSidebarProps) => {
+  const router = useRouter();
   const navItems = [
     {
       title: 'Dashboard',
@@ -32,7 +34,7 @@ const DashboardSidebar = ({ loginToken }: DashboardSidebarProps) => {
       <div className='flex items-center px-4 py-2'>
         <h2 className='text-lg font-bold font-serif'>App Dashboard</h2>
       </div>
-      <div className='flex sm:flex-col flex-row items-center '>
+      <div className='flex sm:flex-col flex-row items-center'>
         {navItems.map((item, index) => {
           return (
             <div key={index} className='mx-1'>
@@ -49,6 +51,7 @@ const DashboardSidebar = ({ loginToken }: DashboardSidebarProps) => {
             className=' mt-9 sm:w-full  hover:bg-[#635f5f]  hover:text-white cursor-pointer'
             onClick={() => {
               logoutFunction();
+              router.push('/dashboard');
             }}
           >
             Logout
