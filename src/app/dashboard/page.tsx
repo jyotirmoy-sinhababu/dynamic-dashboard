@@ -40,7 +40,7 @@ interface Post {
 }
 
 const Dashboard = () => {
-  const [loginToken, setLoginToken] = useState<string | null>();
+  const [loginToken, setLoginToken] = useState<string | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(true);

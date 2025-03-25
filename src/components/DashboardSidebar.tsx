@@ -3,7 +3,11 @@
 import { Button } from '@/components/ui/button';
 import { LayoutDashboard, Settings, User } from 'lucide-react';
 
-const DashboardSidebar = ({ loginToken }: any) => {
+interface DashboardSidebarProps {
+  loginToken: string | null;
+}
+
+const DashboardSidebar = ({ loginToken }: DashboardSidebarProps) => {
   const navItems = [
     {
       title: 'Dashboard',
@@ -42,7 +46,7 @@ const DashboardSidebar = ({ loginToken }: any) => {
           })}
         </div>
       </div>
-      {loginToken != '' ? (
+      {loginToken ? (
         <Button
           variant='outline'
           className=' mx-3 mb-2.5 hover:text-white cursor-pointer hover:bg-black'
