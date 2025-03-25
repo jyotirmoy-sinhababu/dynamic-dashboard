@@ -127,7 +127,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className='flex'>
+    <div className='flex sm:flex-row flex-col'>
       <DashboardSidebar loginToken={loginToken} />
       <div className='space-y-4 sm:mx-[5%] mx-[3%] sm:mt-[11%] mt-[3%]'>
         <div className='flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between'>
@@ -214,22 +214,23 @@ const Dashboard = () => {
                   onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
                 />
               </PaginationItem>
-
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                (page) => {
-                  return (
-                    <PaginationItem key={page}>
-                      <PaginationLink
-                        onClick={() => handlePageChange(page)}
-                        isActive={page === currentPage}
-                        className='cursor-pointer'
-                      >
-                        {page}
-                      </PaginationLink>
-                    </PaginationItem>
-                  );
-                }
-              )}
+              <div className='flex flex-wrap'>
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                  (page) => {
+                    return (
+                      <PaginationItem key={page}>
+                        <PaginationLink
+                          onClick={() => handlePageChange(page)}
+                          isActive={page === currentPage}
+                          className='cursor-pointer'
+                        >
+                          {page}
+                        </PaginationLink>
+                      </PaginationItem>
+                    );
+                  }
+                )}
+              </div>
 
               <PaginationItem>
                 <PaginationNext

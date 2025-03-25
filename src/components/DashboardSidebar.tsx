@@ -28,35 +28,33 @@ const DashboardSidebar = ({ loginToken }: DashboardSidebarProps) => {
   };
 
   return (
-    <div className='flex flex-col justify-between border-r-2  h-[100vh] w-[11%]'>
-      <div className=''>
-        <div className='flex items-center px-4 py-2'>
-          <h2 className='text-lg font-bold font-serif'>App Dashboard</h2>
-        </div>
-        <div className='flex flex-col '>
-          {navItems.map((item, index) => {
-            return (
-              <div key={index} className='mx-1'>
-                <Button className='mt-5 w-full  hover:bg-[#635f5f]  hover:text-white cursor-pointer'>
-                  <item.icon className='h-4 w-4' />
-                  <span>{item.title}</span>
-                </Button>
-              </div>
-            );
-          })}
-        </div>
+    <div className='flex flex-col gap-2.5 border-r-2  sm:h-[100vh] sm:w-[11%] sm:mb-0 mb-6'>
+      <div className='flex items-center px-4 py-2'>
+        <h2 className='text-lg font-bold font-serif'>App Dashboard</h2>
       </div>
-      {loginToken ? (
-        <Button
-          variant='outline'
-          className=' mx-3 mb-2.5 hover:text-white cursor-pointer hover:bg-black'
-          onClick={() => {
-            logoutFunction();
-          }}
-        >
-          Logout
-        </Button>
-      ) : null}
+      <div className='flex sm:flex-col flex-row items-center '>
+        {navItems.map((item, index) => {
+          return (
+            <div key={index} className='mx-1'>
+              <Button className='mt-5 w-full  hover:bg-[#635f5f]  hover:text-white cursor-pointer'>
+                <item.icon className='h-4 w-4' />
+                <span>{item.title}</span>
+              </Button>
+            </div>
+          );
+        })}
+        {loginToken ? (
+          <Button
+            variant='outline'
+            className=' mt-9 sm:w-full  hover:bg-[#635f5f]  hover:text-white cursor-pointer'
+            onClick={() => {
+              logoutFunction();
+            }}
+          >
+            Logout
+          </Button>
+        ) : null}
+      </div>
     </div>
   );
 };
