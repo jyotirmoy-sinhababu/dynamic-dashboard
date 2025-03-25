@@ -40,7 +40,7 @@ interface Post {
 }
 
 const Dashboard = () => {
-  const [loginToken, setLoginToken] = useState<any>();
+  const [loginToken, setLoginToken] = useState<string | null>();
   const [posts, setPosts] = useState<Post[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -54,12 +54,14 @@ const Dashboard = () => {
   useEffect(() => {
     const checkAuth = () => {
       const token = localStorage.getItem('auth_token');
-      token ? router.push('/dashboard') : router.push('/login');
+      if (!token) {
+        router.push('/login');
+      }
       setLoginToken(token);
     };
     checkAuth();
     fetchPosts();
-  }, []);
+  }, [router]);
 
   const fetchPosts = async () => {
     try {

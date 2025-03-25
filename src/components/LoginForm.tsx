@@ -52,7 +52,7 @@ const LoginForm = () => {
     },
   });
 
-  const onSubmit = async (data: SignupFormValues) => {
+  const onSubmit = async () => {
     setSignupError('');
     setIsLoading(true);
 
@@ -67,6 +67,7 @@ const LoginForm = () => {
 
       router.push('/dashboard');
     } catch (error) {
+      console.log(error);
       setSignupError('An error occurred during signup');
     } finally {
       setIsLoading(false);

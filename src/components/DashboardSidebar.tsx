@@ -42,7 +42,7 @@ const DashboardSidebar = ({ loginToken }: any) => {
           })}
         </div>
       </div>
-      {loginToken ? (
+      {loginToken != '' ? (
         <Button
           variant='outline'
           className=' mx-3 mb-2.5 hover:text-white cursor-pointer hover:bg-black'
