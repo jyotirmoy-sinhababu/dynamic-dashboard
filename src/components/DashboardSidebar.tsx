@@ -51,7 +51,7 @@ const DashboardSidebar = ({ loginToken }: DashboardSidebarProps) => {
             className=' mt-9 sm:w-full  hover:bg-[#635f5f]  hover:text-white cursor-pointer'
             onClick={() => {
               logoutFunction();
-              router.push('/dashboard');
+              router.push('/login');
             }}
           >
             Logout
